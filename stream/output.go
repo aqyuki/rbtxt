@@ -6,13 +6,16 @@ import (
 	"net/http"
 )
 
-// PrintFromStream outputs the contents written to the stream to standard output
-func PrintFromStream(r io.Reader) {
+// OutputFromStream reads data from a passed stream and writes it to another stream
+func OutputFromStream(r io.Reader, w io.Writer) {
 	content, err := io.ReadAll(r)
 	if err != nil {
 		return
 	}
-	fmt.Printf("%s", string(content))
+	_, err = w.Write(content)
+	if err != nil {
+		return
+	}
 }
 
 // PrintRobotsExist outputs the status of exist file
