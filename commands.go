@@ -5,6 +5,7 @@ import (
 
 	"github.com/aqyuki/rbtxt/commands/exist"
 	"github.com/aqyuki/rbtxt/commands/root"
+	"github.com/aqyuki/rbtxt/commands/show"
 	"github.com/spf13/cobra"
 )
 
@@ -19,10 +20,16 @@ var (
 		Short: "Check if robots.txt exists",
 		Run:   exist.ExistCommandHandler,
 	}
+	ShowCmd = &cobra.Command{
+		Use:   "show",
+		Short: "Show robots.txt if target host has robots.txt",
+		Run:   show.ShowCommandHandler,
+	}
 )
 
 func init() {
 	RootCmd.AddCommand(ExistCmd)
+	RootCmd.AddCommand(ShowCmd)
 }
 
 func CommandExecute() {
