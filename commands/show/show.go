@@ -3,6 +3,7 @@ package show
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	argu "github.com/aqyuki/rbtxt/args"
 	"github.com/aqyuki/rbtxt/stream"
@@ -24,7 +25,7 @@ func ShowCommandHandler(cmd *cobra.Command, args []string) {
 	defer res.Body.Close()
 
 	if stream.ExistRobots(res) {
-		stream.PrintFromStream(res.Body)
+		stream.OutputFromStream(res.Body, os.Stdout)
 	} else {
 		fmt.Println("Robots.txt is not installed")
 	}
