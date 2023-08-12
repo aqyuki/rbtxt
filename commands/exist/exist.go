@@ -1,7 +1,6 @@
 package exist
 
 import (
-	"fmt"
 	"net/http"
 
 	argu "github.com/aqyuki/rbtxt/args"
@@ -26,6 +25,5 @@ func ExistCommandHandler(cmd *cobra.Command, args []string) {
 	defer res.Body.Close()
 
 	// Check exist
-	exist := stream.ExistRobots(res)
-	fmt.Printf("Exist %t\n", exist)
+	stream.PrintRobotsExist(res)
 }
