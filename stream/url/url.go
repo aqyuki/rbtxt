@@ -25,3 +25,21 @@ func CreateRobotsURLSecure(rawURL string) string {
 	robotsURL.Path = RobotsText
 	return robotsURL.String()
 }
+
+func CreateRobotsURLDefault(rawURL string) string {
+	if rawURL == "" {
+		return ""
+	}
+
+	u, err := url.Parse(rawURL)
+	if err != nil {
+		return ""
+	}
+	host := u.Host
+
+	robotsURL := &url.URL{}
+	robotsURL.Scheme = ProtocolDefault
+	robotsURL.Host = host
+	robotsURL.Path = RobotsText
+	return robotsURL.String()
+}
