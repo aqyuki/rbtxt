@@ -11,6 +11,17 @@ import (
 	"github.com/aqyuki/rbtxt/stream"
 )
 
+type (
+	TestWriter struct {
+		content string
+	}
+)
+
+func (w TestWriter) Write(p []byte) (int, error) {
+	w.content = string(p)
+	return 0, nil
+}
+
 func PickStdout(t *testing.T, fnc func()) string {
 	t.Helper()
 	backup := os.Stdout
@@ -48,8 +59,10 @@ func TestPrintFromStream(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := PickStdout(t, func() { stream.PrintFromStream(tt.args.r) }); got != tt.want {
-				t.Errorf("Case %s Failure. got -> %s, want -> %s", tt.name, got, tt.want)
+			w := TestWriter{}
+			stream.OutputFromStream(tt.args.r, w)
+			if tt.want == w.content {
+				t.Errorf("Case %s failure. want -> %+v , got -> %+v\n", tt.name, tt.want, w.content)
 			}
 		})
 	}
