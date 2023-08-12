@@ -3,6 +3,8 @@ package stream_test
 import (
 	"bytes"
 	"io"
+	"net/http"
+	"net/url"
 	"os"
 	"testing"
 
@@ -50,5 +52,54 @@ func TestPrintFromStream(t *testing.T) {
 				t.Errorf("Case %s Failure. got -> %s, want -> %s", tt.name, got, tt.want)
 			}
 		})
+	}
+}
+
+func TestPrintRobotsExist(t *testing.T) {
+	type args struct {
+		r *http.Response
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "Normal - exist true",
+			args: args{
+				r: &http.Response{
+					Request: &http.Request{
+						URL: &url.URL{
+							Scheme: "https",
+							Host:   "sample.com",
+							Path:   "robots.txt",
+						},
+					},
+					StatusCode: http.StatusOK,
+				},
+			},
+			want: "URL : https://sample.com/robots.txt\nExist : true\n",
+		},
+		{
+			name: "Normal - exist true",
+			args: args{
+				r: &http.Response{
+					Request: &http.Request{
+						URL: &url.URL{
+							Scheme: "https",
+							Host:   "sample.com",
+							Path:   "robots.txt",
+						},
+					},
+					StatusCode: http.StatusBadRequest,
+				},
+			},
+			want: "URL : https://sample.com/robots.txt\nExist : false\n",
+		},
+	}
+	for _, tt := range tests {
+		if got := PickStdout(t, func() { stream.PrintRobotsExist(tt.args.r) }); got != tt.want {
+			t.Errorf("Case %s Failure. got -> %s, want -> %s", tt.name, got, tt.want)
+		}
 	}
 }
