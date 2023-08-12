@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - "**.go"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21.x
+      - name: check out
+        uses: actions/checkout@v3
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: build
+        run: go build ./...
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: test
+        run: |
+          go test -v ./...
+          go vet -v ./...
