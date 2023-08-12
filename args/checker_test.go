@@ -32,6 +32,7 @@ func TestCheckLength(t *testing.T) {
 				args: []string{},
 				len:  0,
 			},
+			want: true,
 		},
 		{
 			name: "Normal - parameter-driven discrepancy (few arguments)",
