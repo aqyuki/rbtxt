@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/aqyuki/rbtxt/commands/exist"
 	"github.com/aqyuki/rbtxt/commands/root"
 	"github.com/spf13/cobra"
 )
@@ -12,6 +13,11 @@ var (
 		Use:   "rbtxt",
 		Short: "rbtxt can quickly retrieve and check robot.txt",
 		Run:   root.RootCommandHandler,
+	}
+	ExistCmd = &cobra.Command{
+		Use:   "exist",
+		Short: "Check if robots.txt exists",
+		Run:   exist.ExistCommandHandler,
 	}
 )
 
