@@ -6,6 +6,7 @@ import (
 	"github.com/aqyuki/rbtxt/commands/exist"
 	"github.com/aqyuki/rbtxt/commands/root"
 	"github.com/aqyuki/rbtxt/commands/show"
+	"github.com/aqyuki/rbtxt/commands/version"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +25,11 @@ var (
 		Use:   "show",
 		Short: "Show robots.txt if target host has robots.txt",
 		Run:   show.ShowCommandHandler,
+	}
+	VersionCmd = &cobra.Command{
+		Use:   "version",
+		Short: "Show version",
+		Run:   version.VersionCommandHandler,
 	}
 )
 
