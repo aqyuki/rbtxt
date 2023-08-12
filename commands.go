@@ -21,6 +21,10 @@ var (
 	}
 )
 
+func init() {
+	RootCmd.AddCommand(ExistCmd)
+}
+
 func CommandExecute() {
 	err := RootCmd.Execute()
 	if err != nil {
