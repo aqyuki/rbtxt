@@ -8,11 +8,7 @@ import (
 
 // OutputFromStream reads data from a passed stream and writes it to another stream
 func OutputFromStream(r io.Reader, w io.Writer) {
-	content, err := io.ReadAll(r)
-	if err != nil {
-		return
-	}
-	_, err = w.Write(content)
+	_, err := io.Copy(w, r)
 	if err != nil {
 		return
 	}
