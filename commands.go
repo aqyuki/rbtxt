@@ -36,6 +36,7 @@ var (
 func init() {
 	RootCmd.AddCommand(ExistCmd)
 	RootCmd.AddCommand(ShowCmd)
+	RootCmd.AddCommand(VersionCmd)
 
 	ShowCmd.Flags().StringVarP(&show.SaveFilePath, "save", "s", "", "Output to file instead of to standard output")
 }
