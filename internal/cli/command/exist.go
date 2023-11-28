@@ -1,10 +1,9 @@
 package command
 
 import (
-	"net/http"
+	"fmt"
 
-	"github.com/aqyuki/rbtxt/stream"
-	"github.com/aqyuki/rbtxt/stream/url"
+	"github.com/aqyuki/rbtxt/internal/robots"
 	"github.com/spf13/cobra"
 )
 
@@ -15,17 +14,16 @@ func CreateExistCommand() *cobra.Command {
 		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 
-			// Create stream
-			var res *http.Response
-			targetURL := url.CreateRobotsURLSecure(args[0])
-			res, err := stream.CreateStream(targetURL)
+			robot, err := robots.NewDefaultDownloader().Download(args[0])
 			if err != nil {
-				return
+				fmt.Println("failed to check robots.txt")
 			}
-			defer res.Body.Close()
 
-			// Check exist
-			stream.PrintRobotsExist(res)
+			if robot.Exist {
+				fmt.Println("robots.txt is exist.")
+			} else {
+				fmt.Println("robots.txt is not exist.")
+			}
 		},
 	}
 }
