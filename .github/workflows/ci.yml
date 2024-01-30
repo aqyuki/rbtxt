@@ -15,13 +15,13 @@ jobs:
         with:
           go-version: 1.21.x
       - name: check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
   build:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: build
         run: go build ./...
@@ -30,7 +30,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: test
         run: |
